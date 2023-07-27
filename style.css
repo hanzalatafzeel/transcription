@@ -279,12 +279,12 @@ section .title::after{
 }
 
 /* services section styling */
-.pricing,.services, .qna,.teams{
+.pricing,.services, .qna,.teams,.yourupload{
     color:#fff;
     background: #111;
 }
 .pricing .title::before,.services .title::before,
-.teams .title::before{
+.teams .title::before,.yourupload .title::before{
     background: #fff;
 }
 .pricing .title::after,.services .title::after,

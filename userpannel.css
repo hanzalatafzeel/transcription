@@ -152,8 +152,8 @@ button:focus {
 
 .rwd-table tr:first-child {
   border-top: none;
-  /* background: #428bca; */
-  color: #111;
+  background: crimson;
+  color: #fff;
 }
 
 .rwd-table tr {
@@ -210,6 +210,9 @@ button:focus {
   padding: .5em 1em;
 }
 @media screen and (max-width: 601px) {
+    .pay .card{
+        width: 90%;
+    }
   .rwd-table tr:nth-child(2) {
     border-top: none;
   }
