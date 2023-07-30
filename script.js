@@ -212,6 +212,8 @@ jQuery(document).ready(function($){
 		$password_field.putCursorAtEnd();
 	});
 
+	
+
 	//show forgot-password form 
 	$forgot_password_link.on('click', function(event){
 		event.preventDefault();
@@ -247,39 +249,40 @@ jQuery(document).ready(function($){
 	}
 
 	//REMOVE THIS - it's just to show error messages 
-	$form_login.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
-	$form_signup.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		$form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
+	// $form_login.find('input[type="submit"]').on('click', function(event){
+	// 	event.preventDefault();
+	// 	$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+	// });
+	// $form_signup.find('input[type="submit"]').on('click', function(event){
+	// 	event.preventDefault();
+	// 	$form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+	// });
 
 
 	//IE9 placeholder fallback
 	//credits http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
-	if(!Modernizr.input.placeholder){
-		$('[placeholder]').focus(function() {
-			var input = $(this);
-			if (input.val() == input.attr('placeholder')) {
-				input.val('');
-		  	}
-		}).blur(function() {
-		 	var input = $(this);
-		  	if (input.val() == '' || input.val() == input.attr('placeholder')) {
-				input.val(input.attr('placeholder'));
-		  	}
-		}).blur();
-		$('[placeholder]').parents('form').submit(function() {
-		  	$(this).find('[placeholder]').each(function() {
-				var input = $(this);
-				if (input.val() == input.attr('placeholder')) {
-			 		input.val('');
-				}
-		  	})
-		});
-	}
+	// if(!Modernizr.input.placeholder){
+	// 	$('[placeholder]').focus(function() {
+	// 		var input = $(this);
+	// 		if (input.val() == input.attr('placeholder')) {
+	// 			input.val('');
+	// 	  	}
+	// 	}).blur(function() {
+	// 	 	var input = $(this);
+	// 	  	if (input.val() == '' || input.val() == input.attr('placeholder')) {
+	// 			input.val(input.attr('placeholder'));
+	// 	  	}
+	// 	}).blur();
+	// 	$('[placeholder]').parents('form').submit(function() {
+	// 	  	$(this).find('[placeholder]').each(function() {
+	// 			var input = $(this);
+	// 			if (input.val() == input.attr('placeholder')) {
+	// 		 		input.val('');
+	// 			}
+	// 	  	})
+	// 	});
+		
+	// }
 
 });
 
@@ -300,3 +303,6 @@ jQuery.fn.putCursorAtEnd = function() {
     	}
 	});
 };
+
+
+

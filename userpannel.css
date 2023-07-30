@@ -139,7 +139,24 @@ button:focus {
     border: 1px solid crimson;
 }
 
-
+.error{
+  background-color: #fff;
+  color: crimson;
+  width: fit-content;
+  margin-left: 10%;
+  padding: 10px 20px ;
+  border-radius: 5px;
+  border: 1px solid crimson;
+}
+.success{
+  background-color: #fff;
+  color: green;
+  width: fit-content;
+  margin-left: 10%;
+  padding: 10px 20px ;
+  border-radius: 5px;
+  border: 1px solid green;
+}
 .yourupload{
     background-color: #222;
 }
@@ -261,6 +278,17 @@ h1 {
   display: block;
   text-align: center;
 }
+/* #error {
+  position: relative;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+  margin-left: 100px;
+  margin-bottom: 60px;
+  padding-bottom: 20px;
+  font-family: 'Ubuntu', sans-serif;
+  color: red;
+} */
 h3 {
   display: inline-block;
   position: relative;

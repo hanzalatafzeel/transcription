@@ -1,3 +1,17 @@
+<?php 
+session_start();
+if(!isset($_SESSION['id'])){
+header("location: ./");
+}
+include 'upload_file.php';
+include 'payment.php';
+include 'config.php';
+$uid =  $_SESSION['id'];
+$sql = "SELECT * FROM `files` WHERE uid = '$uid' ";
+$list = $db->query($sql);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +51,7 @@
                     <li><a class="cd-signup" href="#0">Sign up</a></li>
                 </span> -->
                 <li><a href="#download" class="menu-btn">Download File</a></li>
-                <li><a href="#signout" class="menu-btn">Logout</a></li>
+                <li><a href="logout.php" class="menu-btn">Logout</a></li>
             </ul>
             <div class="menu-btn">
                 <i class="fas fa-bars"></i>
@@ -115,17 +129,20 @@
     </section>
 
     <section class="pay">
+    <?php if(isset($_POST['pay'])){
+        
+        if($paid){
+        ?>
+        <h2 class="success"> Your payment is submitted  </h2>
+        <?php } }?>
         <div class="card">
             <h2 class="title">Payment </h2>
-            <form class="payment" action="">
-                <input type="text" placeholder="Full Name"> <br>
-                <select name="" id="">
-                    <option value="">Payment method</option>
-                    <option value="">Payment method</option>
-                    <option value="">Payment method</option>
-                </select> <br>
-                <input type="number" placeholder="Amount">
-                <input type="submit" value="Pay Now">
+            <form class="payment" action="" method="post">
+                <input type="text" placeholder="Full Name" name="fname"> <br>
+                <input type="number" placeholder="Amount" name="amount"> <br>
+                <input type="number" placeholder="Cedit" name="credit"> <br>
+                <input type="link" placeholder="Cedit" name="pay_link">
+                <input type="submit" name="pay" id="pay" value="Pay Now">
 
             </form>
 
@@ -135,17 +152,28 @@
     <!-- upload  -->
     <section class="upload" id="upload">
         
-        <h2 class=" credit">Credit: 100 min</h2>
+        <h2 class=" credit">Credit: <?php echo $_SESSION['credit'];?> min</h2>
         <h2 class="title">Upload Your Files Here</h2>
-        <form method="post" action="/upload">
+        <?php
+if(isset($_POST['upload'])){
+  if($error){
+  ?>
+       <h2 class="error"><?php echo $errortext; ?></h2>
+        <?php }
+        
+        if($success){
+        ?>
+        <h2 class="success"><?php echo $successtext; ?> </h2>
+        <?php }} ?>
+        <form action="" method="post" enctype="multipart/form-data">
             <!-- <input type="text" value="Click here and press tab to test keyboard interaction."> -->
-            <label class="file">
-                Drop a file or click to select one
-                <input type="file" id="mediaFile" accept="audio/*, video/*" />
+            <label class="file" >
+                <p id="get" >Drop a file or click to select one</p>
+                <input type="file" name="file" id="file" >
                 <!-- use multiple, even if it’s not allowed, to be able to show an info text -->
             </label>
 
-            <button type="submit">Upload</button>
+            <button type="submit" name="upload">Upload</button>
         </form>
         <!--
         TODO:
@@ -165,128 +193,52 @@
                     <th>S no.</th>
                     <th>File Name</th>
                     <th>File Type</th>
-                    <th>Duration</th>
+                    
                     <th>File</th>
                     <th>STR</th>
                   </tr>
+                  <?php 
+                  
+                  if (mysqli_num_rows($list) > 0 ) {
+                    $count = 0;
+                   while( $row = mysqli_fetch_array($list)){
+                  ?>
                   <tr>
                     <td data-th="S no.">
-                      1
+                      <?php echo ++$count; ?>
                     </td>
                     <td data-th="File Name">
-                      How To build website
+                    <?php echo $row['file']; ?>
                     </td>
                     <td data-th="File Type">
-                      Audio
+                    <?php echo $row['type']; ?>
                     </td>
-                    <td data-th="Duration">
-                      50 Sec
-                    </td>
+                    
                     <td data-th="Uploaded File">
-                      <Button>Your file</Button>
+                      <a href="upload/<?php echo $row['file']; ?> " download >Download</a>
                     </td>
                     <td data-th="Download File">
-                      <Button>Download File</Button>
+                     <?php if($row['srt'] == NULL ){
+                     
+                      ?>
+                        Awaited 
+                        <?php } else {?>
+                          <a href="str/<?php echo $row['srt']; ?> " download >Download</a>
+                          <?php } ?>
                     </td>
                   </tr>
+                  <?php } 
+                  } else {
+                    ?>
+                     <tr>
+                    <td colspan="4" >
+                      No Uploads availbale 
+                    </td>
+                  </tr>
+                    <?php 
+                  }
+                  ?>
 
-                  <tr>
-                    <td >
-                      2
-                    </td>
-                    <td >
-                      How To build website
-                    </td>
-                    <td >
-                      Audio
-                    </td>
-                    <td >
-                      50 Sec
-                    </td>
-                    <td >
-                      <Button>Your file</Button>
-                    </td>
-                    <td >
-                      <Button>Download File</Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td >
-                      3
-                    </td>
-                    <td >
-                      How To build website
-                    </td>
-                    <td >
-                      Audio
-                    </td>
-                    <td >
-                      50 Sec
-                    </td>
-                    <td >
-                      <Button>Your file</Button>
-                    </td>
-                    <td >
-                      <Button>Download File</Button>
-                    </td>
-                  </tr><tr>
-                    <td >
-                      4
-                    </td>
-                    <td >
-                      How To build website
-                    </td>
-                    <td >
-                      Audio
-                    </td>
-                    <td >
-                      50 Sec
-                    </td>
-                    <td >
-                      <Button>Your file</Button>
-                    </td>
-                    <td >
-                      <Button>Download File</Button>
-                    </td>
-                  </tr><tr>
-                    <td >
-                      5
-                    </td>
-                    <td >
-                      How To build website
-                    </td>
-                    <td >
-                      Audio
-                    </td>
-                    <td >
-                      50 Sec
-                    </td>
-                    <td >
-                      <Button>Your file</Button>
-                    </td>
-                    <td >
-                      <Button>Download File</Button>
-                    </td>
-                  </tr><tr>
-                    <td >
-                      6
-                    </td>
-                    <td >
-                      How To build website
-                    </td>
-                    <td >
-                      Video
-                    </td>
-                    <td >
-                      50 Sec
-                    </td>
-                    <td >
-                      <Button>Your file</Button>
-                    </td>
-                    <td >
-                      <Button>Download File</Button>
-                    </td>
-                  </tr>
                 
                   
                 </tbody>
@@ -296,36 +248,36 @@
     </section>
 
 
-    <script>
-        $(document).ready(function () {
+    <script >
+     $(document).ready(function () {
             
-            $('input[type=file]').change(function () {
-                //console.log(this.files);
-                var f = this.files;
-                var el = $(this).parent();
-                if (f.length > 1) {
-                    console.log(this.files, 1);
-                    el.text('Sorry, multiple files are not allowed');
-                    return;
-                }
-                const d= f[0].duration;
-                // console.log(d);
-                // el.removeClass('focus');
-                el.html(f[0].name + '<br>' +
-                    '<span class="sml">' +
-                    'type: ' + f[0].type + ', ' +
-                    Math.round(f[0].size / 1024) + ' KB</span>' + '<br>' + '<div id="mediainfo">'+ 'Type and Duration');
-            });
+    $('input[type=file]').change(function () {
+        //console.log(this.files);
+        var f = this.files;
+        var el = $('#get');
+        if (f.length > 1) {
+            console.log(this.files, 1);
+            el.text('Sorry, multiple files are not allowed');
+            return;
+        }
+        const d= f[0].duration;
+        // console.log(d);
+        // el.removeClass('focus');
+        el.html(f[0].name + '<br>' +
+            '<span class="sml">' +
+            'type: ' + f[0].type + ', ' +
+            Math.round(f[0].size / 1024) + ' KB</span>' + '<br>' + '<div id="mediainfo">'+ 'Type and Duration');
+    });
 
-            $('input[type=file]').on('focus', function () {
-                $(this).parent().addClass('focus');
-            });
+    $('input[type=file]').on('focus', function () {
+        $(this).parent().addClass('focus');
+    });
 
-            $('input[type=file]').on('blur', function () {
-                $(this).parent().removeClass('focus');
-            });
+    $('input[type=file]').on('blur', function () {
+        $(this).parent().removeClass('focus');
+    });
 
-        });
+});
     </script>
 
 
