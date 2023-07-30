@@ -7,7 +7,7 @@ if(!isset($_SESSION['admin'])){
 
 include 'config.php';
 
-$sql = "SELECT * FROM `files` WHERE srt is NULL ";
+$sql = "SELECT * FROM `files` WHERE str is NULL ";
 $list = $db->query($sql);
 $sql = "SELECT * FROM `payment` WHERE confirm = 'False' ";
 $pay = $db->query($sql);
@@ -111,7 +111,8 @@ if(isset($_POST['confirm'])){
                     <th>File Type</th>
                     
                     <th>File</th>
-                    <th>STR</th>
+                    <th colspan="2">STR</th>
+                    
                   </tr>
                   <?php 
                   
@@ -133,15 +134,14 @@ if(isset($_POST['confirm'])){
                     <td data-th="Uploaded File">
                       <a href="upload/<?php echo $row['file']; ?> " download >Download</a>
                     </td>
+                    <form action="upload_str.php" method="post" enctype="multipart/form-data">
                     <td data-th="Download File">
-                     <?php if($row['srt'] == NULL ){
-                     
-                      ?>
-                        Awaited 
-                        <?php } else {?>
-                          <a href="str/<?php echo $row['srt']; ?> " download >Download</a>
-                          <?php } ?>
+                    <input type="file" name="file" id="file" >
                     </td>
+                    <td data-th="Download File">
+                    <button type="submit" name="str" id="str" value="<?php echo $row['upload_id']?>" >UPLOAD</button>
+                    </td>
+                   </form>
                   </tr>
                   <?php } 
                   } else {

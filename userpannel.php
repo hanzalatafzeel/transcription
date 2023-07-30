@@ -218,12 +218,12 @@ if(isset($_POST['upload'])){
                       <a href="upload/<?php echo $row['file']; ?> " download >Download</a>
                     </td>
                     <td data-th="Download File">
-                     <?php if($row['srt'] == NULL ){
+                     <?php if($row['str'] == NULL ){
                      
                       ?>
                         Awaited 
                         <?php } else {?>
-                          <a href="str/<?php echo $row['srt']; ?> " download >Download</a>
+                          <a href="str/<?php echo $row['str']; ?> " download >Download</a>
                           <?php } ?>
                     </td>
                   </tr>

@@ -34,7 +34,7 @@ if (in_array($extension, $allowedExts))
       include_once('getid3\getid3\getid3.php');
        $getID3 = new getID3;
       $file = $getID3->analyze('upload/'.$_FILES["file"]["name"]);
-      if( $_SESSION['credit'] < (int)$file['playtime_string']){
+      if( $_SESSION['credit'] < (int)$file['playtime_string'] && (int)$file['playtime_string'] > 0){
         $error = true;
         $errortext = "upload video lesser or equal to your credit";
         unlink('upload/'.$_FILES["file"]["name"]);
@@ -44,9 +44,12 @@ if (in_array($extension, $allowedExts))
         $uid =  $_SESSION['id'];
         $type = $_FILES["file"]["type"];
         $file = $_FILES["file"]["name"];
-        $sql = "INSERT INTO `files`(`upload_id`, `uid`, `type`, `file`) VALUES ('$upload_id','$uid','$type','$file')";
-        $result = $db->query($sql);
-        if($result){
+        $sql_a = "INSERT INTO `files`(`upload_id`, `uid`, `type`, `file`) VALUES ('$upload_id','$uid','$type','$file')";
+        $credit = $_SESSION['credit'] - (int)$file['playtime_string'];
+        $sql_b = "UPDATE `user` SET `credit`='$credit' WHERE uid = '$uid'";
+        $result_a = $db->query($sql_a);
+        $result_b = $db->query($sql_b);
+        if($result_a && $result_b){
           $success = true;
           $successtext = "uploaded " . $_FILES["file"]["name"] . "<br/> translation available in 1 hour. <br/>THANKS! "; 
         }
