@@ -41,7 +41,7 @@ $list = $db->query($sql);
         <div class="max-width">
             <div class="logo"><a href="#">Trans<span>cription</span></a></div>
             <ul class="menu">
-                <li><a href="#home" class="menu-btn">Home</a></li>
+                <li><a href="./" class="menu-btn">Home</a></li>
                 <li><a href="#about" class="menu-btn">About Us</a></li>
                 <li><a href="#pricing" class="menu-btn">Pricing</a></li>
                 <li><a href="#upload" class="menu-btn">Upload File</a></li>
@@ -231,7 +231,7 @@ if(isset($_POST['upload'])){
                   } else {
                     ?>
                      <tr>
-                    <td colspan="4" >
+                    <td colspan="5" >
                       No Uploads availbale 
                     </td>
                   </tr>

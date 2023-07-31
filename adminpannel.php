@@ -13,10 +13,21 @@ $sql = "SELECT * FROM `payment` WHERE confirm = 'False' ";
 $pay = $db->query($sql);
 if(isset($_POST['confirm'])){
     $id = $_POST['confirm'];
-    $sql = "UPDATE `payment` SET `confirm`= True  WHERE pay_id = '$id' ";
-    $confirm = $db->query($sql);
-    if($confirm){
-        header("location: ./adminpannel.php");
+    $uid = $_POST['uid'];
+    $addon = $_POST['addon'];
+    $sql_a = "UPDATE `payment` SET `confirm`= True  WHERE pay_id = '$id' ";
+    $sql_b = "SELECT `credit` FROM `user` WHERE uid = '$uid' ";
+    $confirm = $db->query($sql_a);
+    $user = $db->query($sql_b);
+    if($confirm && mysqli_num_rows($user) == 1){
+      $row = mysqli_fetch_array($user);
+      $credit = $row['credit'];
+      $balance = $credit + $addon;
+      $sql = "UPDATE `user` SET `credit`= '$balance'  WHERE uid = '$uid' ";
+      $result = $db->query($sql);
+      if($result){
+        header("location: adminpannel.php");
+      }
     }
 }
 ?>
@@ -43,7 +54,18 @@ if(isset($_POST['confirm'])){
 
 <body>
     
-
+<nav class="navbar">
+        <div class="max-width">
+            <div class="logo"><a href="#">Trans<span>cription</span></a></div>
+            <ul class="menu">
+            <li><a href="./" class="menu-btn">Home</a></li>
+                <li><a href="logout.php" class="menu-btn">Logout</a></li>
+            </ul>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
 <section class="yourupload" id="download">
         <div class="container">
             <h2 class="title ">Payment List</h2>
@@ -52,9 +74,9 @@ if(isset($_POST['confirm'])){
                   <tr>
                     <th>S no.</th>
                     <th>Full Name</th>
-                    <th>Amount</th>
+                    <th>Hash Link</th>
                     
-                    <th>Hash link</th>
+                    <th>Amount</th>
                     <th></th>
                   </tr>
                   <?php 
@@ -69,17 +91,20 @@ if(isset($_POST['confirm'])){
                     </td>
                     <td data-th="Full Name">
                     <?php echo $row['name']; ?>
-                    </td>
+                  </td>
+                  <td data-th="Hash Link">
+                    <a href="<?php echo $row['pay_link']; ?> "  >check</a>
+                  </td>
+                  <form action="" method="post" >
+                  <input type="text" style="display:none" name="uid" id="uid" value="<?php echo $row['uid']; ?>">
                     <td data-th="Amount">
-                    <?php echo $row['amount']; ?>
+                    <input type="number" name="addon" id="addon" value="<?php echo $row['credit']; ?>" readonly >
                     </td>
                     
-                    <td data-th="Hash Link">
-                      <a href="<?php echo $row['pay_link']; ?> "  >check</a>
-                    </td>
                     <td data-th="Download File">
-                    <form action="" method="post" > <button type="submit" name="confirm" id="confirm" value="<?php echo $row['pay_id']?>"> confirm</form>
+                     <button type="submit" name="confirm" id="confirm" value="<?php echo $row['pay_id']?>"> confirm</button>
                     </td>
+                    </form>
                   </tr>
                   <?php } 
                   } else {

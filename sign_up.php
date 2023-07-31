@@ -12,7 +12,7 @@ if(isset($_POST['signup'])){
    $sql = "INSERT INTO `user`(`uid`,`name`,`email`,`password`,`admin_key`) VALUES ('$uid','$name','$email','$password','admin00')";
    $result = $db->query($sql);
    if($result){
-    echo "pass";
+  header("location: ./");
    }else{
     echo "failed";
    }

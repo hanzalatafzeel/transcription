@@ -34,6 +34,7 @@ if (in_array($extension, $allowedExts))
       include_once('getid3\getid3\getid3.php');
        $getID3 = new getID3;
       $file = $getID3->analyze('upload/'.$_FILES["file"]["name"]);
+      $vsize = (int)$file['playtime_string'];
       if( $_SESSION['credit'] < (int)$file['playtime_string'] && (int)$file['playtime_string'] > 0){
         $error = true;
         $errortext = "upload video lesser or equal to your credit";
@@ -45,7 +46,7 @@ if (in_array($extension, $allowedExts))
         $type = $_FILES["file"]["type"];
         $file = $_FILES["file"]["name"];
         $sql_a = "INSERT INTO `files`(`upload_id`, `uid`, `type`, `file`) VALUES ('$upload_id','$uid','$type','$file')";
-        $credit = $_SESSION['credit'] - (int)$file['playtime_string'];
+        $credit = $_SESSION['credit'] - $vsize;
         $sql_b = "UPDATE `user` SET `credit`='$credit' WHERE uid = '$uid'";
         $result_a = $db->query($sql_a);
         $result_b = $db->query($sql_b);

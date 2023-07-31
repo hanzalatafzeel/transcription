@@ -32,6 +32,8 @@ session_start();
             <div class="logo"><a href="#">Trans<span>cription</span></a></div>
             <ul class="menu">
                 <li><a href="#home" class="menu-btn">Home</a></li>
+                <li><a href="adminpannel.php" class="menu-btn">Admin</a></li>
+                <li><a href="userpannel.php" class="menu-btn">User Pannel </a></li>
                 <li><a href="#about" class="menu-btn">About Us</a></li>
                 <li><a href="#pricing" class="menu-btn">Pricing</a></li>
                 <li><a href="#tutorials" class="menu-btn">Tutorials</a></li>
