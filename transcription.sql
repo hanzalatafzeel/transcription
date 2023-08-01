@@ -51,7 +51,7 @@ CREATE TABLE `files` (
   `uid` char(9) NOT NULL,
   `type` char(5) NOT NULL,
   `file` varchar(30) NOT NULL,
-  `srt` varchar(30) DEFAULT NULL
+  `str` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
